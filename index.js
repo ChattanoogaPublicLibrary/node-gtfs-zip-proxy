@@ -36,7 +36,7 @@ function getGtfsFeed(repo) {
   }
 
   var rev = '-'
-  
+
   return github.src(repo)
     .pipe(buffer())
     .pipe(filter(function (file) {
@@ -57,10 +57,6 @@ function getGtfsFeed(repo) {
     .on('data', function (x) {
       console.log(x.path)
     })
-    .pipe(trailer('feed_info.txt', function (cb) {
-      console.log('writing trailer...', info)
-      cb(null, new Buffer(writePairs(info)))
-    }))
     .pipe(zip('gtfs.zip'))
 
 }
@@ -132,7 +128,7 @@ function writePairs(obj) {
     headers.push(key)
     cells.push(obj[key])
   })
-  return new Buffer(headers.join(',') + '\n' + cells.join(',')) 
+  return new Buffer(headers.join(',') + '\n' + cells.join(','))
 }
 
 function parseInfo(file, info) {
